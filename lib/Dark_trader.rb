@@ -30,6 +30,7 @@ def crypto_scrapper
   puts
   puts "OK"
   puts
+
   #Harmonization
   count=0
   good_crypto_names = []
@@ -37,7 +38,7 @@ def crypto_scrapper
 
   while count<crypto_names.size do
     good_crypto_names << crypto_names[count].text
-    good_crypto_values << crypto_values[count].text
+    good_crypto_values << crypto_values[count].text.to_s.gsub("$","").gsub("\n","")
     count += 1  
   end  
   
@@ -51,9 +52,15 @@ def crypto_scrapper
   puts "OK"
   puts
 
-  #Faire un hash 
-  hash_crypto = Hash[good_crypto_names.zip(good_crypto_values)]
-  puts "Here is the Hash : #{hash_crypto}"
+  #Faire un hash et le mettre dans un tableau 
+  a=[]
+  i=0
+  while i<good_crypto_names.size do
+    a << hash_crypto = Hash[good_crypto_names[i], (good_crypto_values[i])]
+    i += 1
+  end
+    puts "Here is the array expected : #{a}"
+
   
   #TEST return test = good_crypto_names.size,good_crypto_names.grep(/BTC/)]
   return test = good_crypto_names
@@ -82,9 +89,9 @@ end
 
 def perform
   crypto_scrapper
-  x = test
-  crypto_scrapper_test1(x)
-  crypto_scrapper_test2(x)
+  #x = test
+  #crypto_scrapper_test1(x)
+  #crypto_scrapper_test2(x)
 end
 
 perform
